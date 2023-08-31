@@ -1,3 +1,10 @@
+@import "~bootstrap/scss/bootstrap";
+
+:root {
+  --blue: #007fff;
+  --light-blue: #002aff;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
