@@ -25,15 +25,24 @@ export default {
       setFilterQuery: "payments/setFilterQuery",
       setDateQuery: "payments/setDateQuery",
     }),
+    ...mapActions({
+      fetchPayments: "payments/fetchPayments",
+      fetchSources: "sources/fetchSources",
+    }),
   },
   computed: {
     ...mapState({
       payments: (state) => state.payments.payments,
       dateQuery: (state) => state.payments.dateQuery,
+      isLoading: (state) => state.payments.isLoading,
     }),
     ...mapGetters({
       sortedPayments: "payments/sortedPayments",
     }),
+  },
+  mounted() {
+    this.fetchSources();
+    this.fetchPayments();
   },
 };
 </script>

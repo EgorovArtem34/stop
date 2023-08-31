@@ -1,22 +1,27 @@
+import axios from "axios";
+import { createQueryParams } from "../utils/createQueryParams";
+import { urls } from "../utils/apiUrls";
+
 export const paymentsModule = {
   state: () => ({
-    payments: x,
+    payments: [],
     filterQuery: null,
-    dateQuery: null,
+    dateQuery: "",
+    fetchErr: null,
+    isLoading: false,
   }),
-  getters: {
-    sortedPayments(state) {
-      return [...state.payments].filter(
-        (payment) => payment.date === dateQuery
-      );
-    },
-  },
   mutations: {
+    setPayments(state, payments) {
+      state.payments = payments;
+    },
     setDateQuery(state, dateQuery) {
       state.dateQuery = dateQuery;
     },
     setFilterQuery(state, filterQuery) {
       state.filterQuery = filterQuery;
+    },
+    setFetchErr(state, message) {
+      state.fetchErr = message;
     },
     resetDateQuery(state) {
       state.dateQuery = null;
@@ -25,9 +30,30 @@ export const paymentsModule = {
       state.filterQuery = null;
     },
     setLoading(state, value) {
-      state.isPostsLoading = value;
+      state.isLoading = value;
     },
   },
-  actions: {},
+  actions: {
+    async fetchPayments({ state, commit }) {
+      try {
+        commit("setLoading", true);
+        const queryParams = createQueryParams(
+          state.dateQuery,
+          state.filterQuery
+        );
+        const currentUrl = queryParams
+          ? `${urls.payments}?${queryParams}`
+          : urls.payments;
+        console.log(currentUrl);
+        const response = await axios.get(currentUrl);
+        commit("setPayments", response.data);
+        commit("setFetchErr", null);
+      } catch (err) {
+        commit("setFetchErr", err.message);
+      } finally {
+        commit("setLoading", false);
+      }
+    },
+  },
   namespaced: true,
 };

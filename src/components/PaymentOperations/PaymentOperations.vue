@@ -18,7 +18,7 @@
         <td>{{ payment.id }}</td>
         <td>{{ payment.date }}</td>
         <td>{{ payment.summ }}</td>
-        <td>{{ payment.source_id }}</td>
+        <td>{{ getSourceById(payment.source_id) }}</td>
         <td>{{ payment.status_id }}</td>
       </tr>
     </tbody>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from "vuex";
 export default {
   props: {
     payments: {
@@ -33,13 +34,13 @@ export default {
       required: true,
     },
   },
-  mutations: {
-    setFilterQuery(state, filterQuery) {
-      state.filterQuery = filterQuery;
-    },
-    setDateQuery(state, dateQuery) {
-      state.dateQuery = dateQuery;
-    },
+  computed: {
+    ...mapState({
+      sources: (state) => state.sources.sources,
+    }),
+    ...mapGetters({
+      getSourceById: "sources/getSourceById",
+    }),
   },
 };
 </script>
