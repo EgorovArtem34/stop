@@ -12,15 +12,17 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="payment in payments" :key="payment.id">
-        <td>{{ payment.client }}</td>
-        <td>{{ payment.contract }}</td>
-        <td>{{ payment.id }}</td>
-        <td>{{ payment.date }}</td>
-        <td>{{ payment.summ }}</td>
-        <td>{{ getSourceById(payment.source_id) }}</td>
-        <td>{{ payment.status_id }}</td>
-      </tr>
+      <transition-group name="payments">
+        <tr v-for="payment in payments" :key="payment.id" class="payments-item">
+          <td>{{ payment.client }}</td>
+          <td>{{ payment.contract }}</td>
+          <td>{{ payment.id }}</td>
+          <td>{{ payment.date }}</td>
+          <td>{{ Number(payment.summ) }}</td>
+          <td>{{ getSourceById(payment.source_id) }}</td>
+          <td>{{ payment.status_id }}</td>
+        </tr>
+      </transition-group>
     </tbody>
   </table>
 </template>
@@ -45,4 +47,17 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.payments-enter-active,
+.payments-leave-active {
+  transition: all 0.4s ease;
+}
+.payments-enter-from,
+.payments-leave-to {
+  opacity: 0;
+  transform: translateX(130px);
+}
+.payments-move {
+  transition: transform 0.4s ease;
+}
+</style>

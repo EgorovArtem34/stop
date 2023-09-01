@@ -3,7 +3,7 @@
     <label>
       Дата платежа
       <VueDatePicker
-        v-model="date"
+        v-model="dateQuery"
         @update:model-value="handleDate"
         locale="ru"
         cancelText="отменить"
@@ -17,7 +17,7 @@
     <label>
       Источник платежа
       <select
-        v-model="selectSource"
+        v-model="filterQuery"
         @change="changeOption"
         class="form-select"
         aria-label="выбор источника платежей"
@@ -39,12 +39,6 @@ import { formatDate } from "../../utils/formatDate.js";
 
 export default {
   components: { VueDatePicker },
-  data() {
-    return {
-      date: null,
-      selectSource: "",
-    };
-  },
   methods: {
     ...mapMutations({
       setDateQuery: "payments/setDateQuery",
@@ -61,20 +55,36 @@ export default {
         const formattedDate = formatDate(modelData);
         this.setDateQuery(formattedDate);
       }
-      this.fetchPayments();
+      // this.fetchPayments();
     },
     changeOption({ target }) {
       const value = target.value;
-      console.log(value, typeof value);
       this.setFilterQuery(value);
-      this.fetchPayments();
+      // this.fetchPayments();
     },
   },
   computed: {
     ...mapState({
       filterQuery: (state) => state.payments.filterQuery,
+      dateQuery: (state) => state.payments.dateQuery,
       sources: (state) => state.sources.sources,
     }),
   },
+  watch: {
+    dateQuery() {
+      this.fetchPayments();
+    },
+    filterQuery() {
+      this.fetchPayments();
+    },
+  },
 };
 </script>
+
+<style scoped lang="scss">
+.filters {
+  display: flex;
+  gap: 15px;
+  margin: 10px 0 10px;
+}
+</style>

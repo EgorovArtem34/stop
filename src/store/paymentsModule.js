@@ -5,14 +5,17 @@ import { urls } from "../utils/apiUrls";
 export const paymentsModule = {
   state: () => ({
     payments: [],
-    filterQuery: null,
-    dateQuery: "",
+    filterQuery: "",
+    dateQuery: null,
     fetchErr: null,
     isLoading: false,
   }),
   mutations: {
     setPayments(state, payments) {
       state.payments = payments;
+    },
+    addPayment(state, payment) {
+      state.payments = [payment];
     },
     setDateQuery(state, dateQuery) {
       state.dateQuery = dateQuery;
@@ -44,7 +47,6 @@ export const paymentsModule = {
         const currentUrl = queryParams
           ? `${urls.payments}?${queryParams}`
           : urls.payments;
-        console.log(currentUrl);
         const response = await axios.get(currentUrl);
         commit("setPayments", response.data);
         commit("setFetchErr", null);
