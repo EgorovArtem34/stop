@@ -1,7 +1,24 @@
-# Vue 3 + Vite
+# Тестовое задание
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+[vercel deploy](https://stop-psi.vercel.app/)
 
-## Recommended IDE Setup
+## Использованные технологии
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- Vue
+- Vuex
+- Bootstrap
+
+## Установка
+
+1. Склонируйте репозиторий `git clone https://github.com/EgorovArtem34/stop`
+2. Перейдите в директорию проекта `cd stop`
+3. Установите зависимости `make install`
+4. Запустите локальную версию `make start`
+5. Нажмите на кнопку `h` для показа настроек
+
+```press r to restart the server
+press u to show server url
+press o to open in browser
+press c to clear console
+press q to quit
+```
